@@ -1,11 +1,21 @@
 class Board
-	attr_accessor :squares
+	attr_accessor :cells
+
+	Point = Struct.new(:x, :y)
 
 	def initialize()
-		@squares = []
+		@cells = []
 		8.times{|i|
+			ary = []
 			8.times{|j|
-				@squares << [i,j]}}
+				ary << Point.new(i,j)
+			}
+			@cells << ary
+		}
 	end
-	
+
+	def draw()
+		print @cells[0].count
+	end
+
 end
