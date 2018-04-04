@@ -1,5 +1,5 @@
 class Chess
-require 'board.rb'
+require './lib/board.rb'
 	attr_accessor :board
 
 	def initialize
