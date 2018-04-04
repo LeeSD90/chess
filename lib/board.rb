@@ -1,19 +1,14 @@
 class Board
 require 'colorize'
-	attr_accessor :cells, :size
+require './lib/piece.rb'
+	attr_accessor :cells, :size, :pieces
 
-	Point = Struct.new(:x, :y)
+	Point = Struct.new(:x, :y, :occupant)
 
 	def initialize()
 		@size = 7
-		@cells = []
-		8.times{|i|
-			ary = []
-			8.times{|j|
-				ary << Point.new(i,j)
-			}
-			@cells << ary
-		}
+		@cells = create_board
+		@pieces = create_pieces
 	end
 
 	def draw()
@@ -51,6 +46,36 @@ require 'colorize'
 		('a'..'h').each do |l|
 			print (" " * (size-1)) + l
 		end
+	end
+
+	private
+
+	def create_board
+		board = []
+		8.times{|i|
+			ary = []
+			8.times{|j|
+				ary << Point.new(i,j)
+			}
+			board << ary
+		}
+		return board
+	end
+
+	def create_pieces
+		pieces = []
+		color = "White"
+		16.times do |i|
+			i%2 == 0 ? color = "Black" : color = "White"
+			Pawn.new("Black") 
+		end
+		4.times do |i|
+			i%2 == 0 ? color = "Black" : color = "White"
+			pieces << Knight.new(color) << Rook.new(color) << Bishop.new(color)
+		end
+		pieces << Queen.new("White") << Queen.new("Black")
+		pieces << King.new("White") << King.new("Black")
+		return pieces
 	end
 
 end
