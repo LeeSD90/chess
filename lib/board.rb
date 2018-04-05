@@ -3,14 +3,22 @@ require 'colorize'
 require './lib/piece.rb'
 	attr_accessor :cells, :size, :pieces
 
-	Point = Struct.new(:x, :y, :occupant)
+	class Cell
+		attr_accessor :x, :y, :occupant
+		def initialize(x, y, occupant = nil)
+			@x = x
+			@y = y
+		end
+	end
 
 	def initialize()
 		@size = 7
-		@cells = create_board
 		@pieces = create_pieces
-		@pieces.each do |piece|
-			puts piece.unicode
+		@cells = create_board
+		@cells.each do |row|
+			row.each do |cell|
+				if !cell.occupant.nil? then print cell.occupant.unicode end
+			end
 		end
 	end
 
@@ -58,10 +66,59 @@ require './lib/piece.rb'
 		8.times{|i|
 			ary = []
 			8.times{|j|
-				ary << Point.new(i,j)
+				ary << Cell.new(i,j)
 			}
 			board << ary
 		}
+
+		board = place_pieces(board)
+		return board
+	end
+
+	def place_pieces(board)
+		@pieces.each do |piece|
+			case piece.side
+			when 'White'
+				case piece.type
+				when 'Pawn'
+					i = 0
+					until board[1][i].occupant.nil?
+						i += 1
+					end
+					board[1][i].occupant = piece
+				when 'Knight'
+					board[0][1].occupant.nil? ? board[0][1].occupant = piece : board[0][6].occupant = piece
+				when 'Bishop'
+					board[0][2].occupant.nil? ? board[0][2].occupant = piece : board[0][5].occupant = piece
+				when 'Rook'
+					board[0][0].occupant.nil? ? board[0][0].occupant = piece : board[0][7].occupant = piece
+				when 'Queen'
+					board[0][4].occupant = piece
+				when 'King'
+					board[0][3].occupant = piece
+				end
+			when 'Black'
+				case piece.type
+				when 'Pawn'
+					i = 0
+					until board[6][i].occupant.nil?
+						i += 1
+					end
+					board[6][i].occupant = piece
+				when 'Knight'
+					board[7][1].occupant.nil? ? board[7][1].occupant = piece : board[7][6].occupant = piece
+				when 'Bishop'
+					board[7][2].occupant.nil? ? board[7][2].occupant = piece : board[7][5].occupant = piece
+				when 'Rook'
+					board[7][0].occupant.nil? ? board[7][0].occupant = piece : board[7][7].occupant = piece
+				when 'Queen'
+					board[7][4].occupant = piece
+				when 'King'
+					board[7][3].occupant = piece
+				end
+			end
+		end
+
 		return board
 	end
 
@@ -70,7 +127,7 @@ require './lib/piece.rb'
 		color = "White"
 		16.times do |i|
 			i%2 == 0 ? color = "Black" : color = "White"
-			Pawn.new("Black") 
+			pieces << Pawn.new(color) 
 		end
 		4.times do |i|
 			i%2 == 0 ? color = "Black" : color = "White"
