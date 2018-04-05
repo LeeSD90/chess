@@ -15,13 +15,9 @@ require './lib/piece.rb'
 		@size = 7
 		@pieces = create_pieces
 		@cells = create_board
-		@cells.each do |row|
-			row.each do |cell|
-				if !cell.occupant.nil? then print cell.occupant.unicode end
-			end
-		end
 	end
 
+	#Good grief this method is a mess
 	def draw()
 		puts "\n\n"
 		alternate = true
@@ -34,12 +30,23 @@ require './lib/piece.rb'
 			end
 
 			row.each do |cell|
+
 				if cell.y == 0 then print "\n" + (" " * (size/2)) + (row[0].x + 1).to_s + (" " * (size/2)) end
+
 				if(alternate)
-					print cell.y%2 == 0 ? (" " * size).colorize(:background => :white) : (" " * size).colorize(:background => :red)
+					if cell.occupant.nil? then
+						print cell.y%2 == 0 ? (" " * size).colorize(:background => :white) : (" " * size).colorize(:background => :red)
+					else
+						print cell.y%2 == 0 ? ((" " * (size/2))+cell.occupant.unicode+(" " * (size/2))).colorize(:color => :black, :background => :white) : ((" " * (size/2))+cell.occupant.unicode+(" " * (size/2))).colorize(:color => :black, :background => :red)
+					end
 				else
-					print cell.y%2 == 0 ? (" " * size).colorize(:background => :red) : (" " * size).colorize(:background => :white)
+					if cell.occupant.nil? then
+						print cell.y%2 == 0 ? (" " * size).colorize(:background => :red) : (" " * size).colorize(:background => :white)
+					else
+						print cell.y%2 == 0 ? ((" " * (size/2))+cell.occupant.unicode+(" " * (size/2))).colorize(:color => :black, :background => :red) : ((" " * (size/2))+cell.occupant.unicode+(" " * (size/2))).colorize(:color => :black, :background => :white)
+					end
 				end
+
 			end
 			puts
 			print (" " * size)
