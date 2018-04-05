@@ -9,6 +9,9 @@ require './lib/piece.rb'
 		@size = 7
 		@cells = create_board
 		@pieces = create_pieces
+		@pieces.each do |piece|
+			puts piece.unicode
+		end
 	end
 
 	def draw()
@@ -42,7 +45,7 @@ require './lib/piece.rb'
 			#puts "\n" unless row[0].x == 0
 		end
 		puts "\n"
-		print " " * (size-3)
+		print " " * (size * 0.7)
 		('a'..'h').each do |l|
 			print (" " * (size-1)) + l
 		end

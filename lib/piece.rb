@@ -9,42 +9,42 @@ end
 class Pawn < Piece
 	def initialize(side)
 		super(side)
-		@side == "White" ? @unicode = "U+2659" : @unicode = "U+265F"
+		@side == "White" ? @unicode = "\u2659" : @unicode = "\u265F"
 	end
 end
 
 class Knight < Piece
 	def initialize(side)
 		super(side)
-		@side == "White" ? @unicode = "U+2658" : @unicode = "U+265E"
+		@side == "White" ? @unicode = "\u2658" : @unicode = "\u265E"
 	end
 end
 
 class Bishop < Piece
 	def initialize(side)
 		super(side)
-		@side == "White" ? @unicode = "U+2657" : @unicode = "U+265D"
+		@side == "White" ? @unicode = "\u2657" : @unicode = "\u265D"
 	end
 end
 
 class Rook < Piece
 	def initialize(side)
 		super(side)
-		@side == "White" ? @unicode = "U+2656" : @unicode = "U+265C"
+		@side == "White" ? @unicode = "\u2656" : @unicode = "\u265C"
 	end
 end
 
 class Queen < Piece
 	def initialize(side)
 		super(side)
-		@side == "White" ? @unicode = "U+2655" : @unicode = "U+265B"
+		@side == "White" ? @unicode = "\u2655" : @unicode = "\u265B"
 	end
 end
 
 class King < Piece
 	def initialize(side)
 		super(side)
-		@side == "White" ? @unicode = "U+2654" : @unicode = "U+265A"
+		@side == "White" ? @unicode = "\u2654" : @unicode = "\u265A"
 	end
 end
 
