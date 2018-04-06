@@ -34,7 +34,25 @@ require './lib/piece.rb'
 		end
 	end
 
-	def move_piece(origin, destination)
+	def convert_input(input)
+		#Take one from the numbers to match the boards coordinate system
+		input = input.chars.map{|c| if /\A[-+]?\d+\z/ === c then c = (c.to_i - 1).to_s else c end }.join
+		#Convert the letters to numbers
+		input = input.gsub(/[A-H]/){|c|(("A".."H").to_a.join).index(c)}
+
+		ary = []
+
+		#Reverse their positions so they match the row column format of the coordinate system
+		origin = Cell.new(input[1], input[0])
+		destination = Cell.new(input[3], input[2])
+
+		ary << origin << destination
+		return ary
+	end
+
+	def move_piece(piece, destination)
+		return false
+	end
 
 	private
 
