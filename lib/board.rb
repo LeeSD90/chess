@@ -19,7 +19,7 @@ require './lib/piece.rb'
 		draw
 	end
 
-	def get_cell(x,y)
+	def get_cell_occupant(x,y)
 		if in_bounds?(x,y) then
 			return @cells[x][y].occupant
 		else return false
@@ -43,21 +43,41 @@ require './lib/piece.rb'
 		ary = []
 
 		#Reverse their positions so they match the row column format of the coordinate system
-		origin = Cell.new(input[1], input[0])
-		destination = Cell.new(input[3], input[2])
+		origin = Cell.new(input[1].to_i, input[0].to_i)
+		destination = Cell.new(input[3].to_i, input[2].to_i)
 
-		ary << origin << destination
-		return ary
+		return origin, destination
 	end
 
-	def move_piece(piece, destination)
-		return false
+	def move_piece(origin, destination)
+
+		if validate_move(origin, destination) then
+			set_cell(destination.x, destination.y, get_cell_occupant(origin.x, origin.y))
+			set_cell(origin.x, origin.y, nil)
+			draw
+			return true
+		else
+			return false
+		end
+		
 	end
 
 	private
 
+	def validate_move(origin, destination)
+		piece = get_cell_occupant(origin.x, origin.y)
+		occupied = get_cell_occupant(destination.x, destination.y)
+
+		if !occupied.nil? then
+			return !(occupied.side === piece.side)
+		end
+
+		return !piece.nil? && (!occupied || occupied.nil?)
+	end
+
 	#Good grief this method is a mess
 	def draw()
+		#system 'cls'
 		puts "\n\n"
 		alternate = true
 		@cells.reverse.each do |row|
@@ -128,16 +148,16 @@ require './lib/piece.rb'
 				case piece.type
 				when 'Pawn'
 					i = 0
-					until get_cell(1,i).nil?
+					until get_cell_occupant(1,i).nil?
 						i += 1
 					end
 					set_cell(1,i,piece)
 				when 'Knight'
-					get_cell(0,1).nil? ? set_cell(0,1,piece) : set_cell(0,6,piece)
+					get_cell_occupant(0,1).nil? ? set_cell(0,1,piece) : set_cell(0,6,piece)
 				when 'Bishop'
-					get_cell(0,2).nil? ? set_cell(0,2,piece) : set_cell(0,5,piece)
+					get_cell_occupant(0,2).nil? ? set_cell(0,2,piece) : set_cell(0,5,piece)
 				when 'Rook'
-					get_cell(0,0).nil? ? set_cell(0,0,piece) : set_cell(0,7,piece)
+					get_cell_occupant(0,0).nil? ? set_cell(0,0,piece) : set_cell(0,7,piece)
 				when 'Queen'
 					set_cell(0,4,piece)
 				when 'King'
@@ -147,16 +167,16 @@ require './lib/piece.rb'
 				case piece.type
 				when 'Pawn'
 					i = 0
-					until get_cell(6,i).nil?
+					until get_cell_occupant(6,i).nil?
 						i += 1
 					end
 					set_cell(6,i,piece)
 				when 'Knight'
-					get_cell(7,1).nil? ? set_cell(7,1,piece) : set_cell(7,6,piece)
+					get_cell_occupant(7,1).nil? ? set_cell(7,1,piece) : set_cell(7,6,piece)
 				when 'Bishop'
-					get_cell(7,2).nil? ? set_cell(7,2,piece) : set_cell(7,5,piece)
+					get_cell_occupant(7,2).nil? ? set_cell(7,2,piece) : set_cell(7,5,piece)
 				when 'Rook'
-					get_cell(7,0).nil? ? set_cell(7,0,piece) : set_cell(7,7,piece)
+					get_cell_occupant(7,0).nil? ? set_cell(7,0,piece) : set_cell(7,7,piece)
 				when 'Queen'
 					set_cell(7,4,piece)
 				when 'King'

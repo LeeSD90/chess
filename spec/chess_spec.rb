@@ -44,7 +44,7 @@ describe Chess do
 
 		describe '#move_piece' do
 
-			context "given a piece on the board and valid destination for that piece" do
+			context "given the coordinate of a piece on the board and valid destination for that piece" do
 				it "moves the piece to the specified destination and returns true" do
 					piece = Pawn.new("White")
 					expect(subject.set_cell(1,2, piece)).to eql true
@@ -53,11 +53,29 @@ describe Chess do
 				end
 			end
 
-			context "given a piece on the board and an out of bounds cell coordinate" do
+			context "given the coordinate of a piece on the board and an out of bounds cell coordinate" do
 				it "returns false" do
 					piece = Pawn.new("White")
 					expect(subject.set_cell(1, 2, piece)).to eql true
 					expect(subject.move_piece(piece, -2,8)).to eql false
+				end
+			end
+
+			context "given the coordinate of a piece on the board and aa destination coordinate already occupied by a friendly piece" do
+				it "returns false" do
+					piece = Pawn.new("White")
+					piece2 = Knight.new("White")
+					expect(subject.set_cell(1, 2, piece)).to eql true
+					expect(subject.set_cell(2, 2, piece)).to eql true
+					expect(subject.move_piece(piece, 2,2)).to eql false
+				end
+			end
+
+			context "given an invalid coordinate for a piece on the board and a valid destination cell coordinate" do
+				it "returns false" do
+					piece = Pawn.new("White")
+					expect(subject.set_cell(3, 2, piece)).to eql true
+					expect(subject.move_piece(Cell.new(1,2), Cell.new(2,2)).to eql false
 				end
 			end
 
