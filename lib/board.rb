@@ -34,6 +34,8 @@ require './lib/piece.rb'
 		end
 	end
 
+	def move_piece(origin, destination)
+
 	private
 
 	#Good grief this method is a mess
