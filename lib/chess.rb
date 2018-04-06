@@ -4,7 +4,6 @@ require './lib/board.rb'
 
 	def initialize
 		@board = Board.new
-		@board.draw
 	end
 
 end

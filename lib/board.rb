@@ -15,7 +15,25 @@ require './lib/piece.rb'
 		@size = 7
 		@pieces = create_pieces
 		@cells = create_board
+		draw
 	end
+
+	def get_cell(x,y)
+		if in_bounds?(x,y) then
+			return @cells[x][y].occupant
+		else return false
+		end
+	end
+
+	def set_cell(x,y,occupant)
+		if in_bounds?(x,y) then
+			@cells[x][y].occupant = occupant
+			return true
+		else return false
+		end
+	end
+
+	private
 
 	#Good grief this method is a mess
 	def draw()
@@ -66,8 +84,6 @@ require './lib/piece.rb'
 		end
 	end
 
-	private
-
 	def create_board
 		board = []
 		8.times{|i|
@@ -80,6 +96,10 @@ require './lib/piece.rb'
 
 		board = place_pieces(board)
 		return board
+	end
+
+	def in_bounds?(x,y)
+		return (0..7).cover?(x) && (0..7).cover?(y)
 	end
 
 	def place_pieces(board)
