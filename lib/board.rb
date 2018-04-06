@@ -15,6 +15,7 @@ require './lib/piece.rb'
 		@size = 7
 		@pieces = create_pieces
 		@cells = create_board
+		place_pieces
 		draw
 	end
 
@@ -75,7 +76,6 @@ require './lib/piece.rb'
 			end
 			puts
 			alternate ^= true
-			#puts "\n" unless row[0].x == 0
 		end
 		puts "\n"
 		print " " * (size * 0.7)
@@ -94,7 +94,6 @@ require './lib/piece.rb'
 			board << ary
 		}
 
-		board = place_pieces(board)
 		return board
 	end
 
@@ -102,51 +101,50 @@ require './lib/piece.rb'
 		return (0..7).cover?(x) && (0..7).cover?(y)
 	end
 
-	def place_pieces(board)
+	def place_pieces()
 		@pieces.each do |piece|
 			case piece.side
 			when 'White'
 				case piece.type
 				when 'Pawn'
 					i = 0
-					until board[1][i].occupant.nil?
+					until get_cell(1,i).nil?
 						i += 1
 					end
-					board[1][i].occupant = piece
+					set_cell(1,i,piece)
 				when 'Knight'
-					board[0][1].occupant.nil? ? board[0][1].occupant = piece : board[0][6].occupant = piece
+					get_cell(0,1).nil? ? set_cell(0,1,piece) : set_cell(0,6,piece)
 				when 'Bishop'
-					board[0][2].occupant.nil? ? board[0][2].occupant = piece : board[0][5].occupant = piece
+					get_cell(0,2).nil? ? set_cell(0,2,piece) : set_cell(0,5,piece)
 				when 'Rook'
-					board[0][0].occupant.nil? ? board[0][0].occupant = piece : board[0][7].occupant = piece
+					get_cell(0,0).nil? ? set_cell(0,0,piece) : set_cell(0,7,piece)
 				when 'Queen'
-					board[0][4].occupant = piece
+					set_cell(0,4,piece)
 				when 'King'
-					board[0][3].occupant = piece
+					set_cell(0,3,piece)
 				end
 			when 'Black'
 				case piece.type
 				when 'Pawn'
 					i = 0
-					until board[6][i].occupant.nil?
+					until get_cell(6,i).nil?
 						i += 1
 					end
-					board[6][i].occupant = piece
+					set_cell(6,i,piece)
 				when 'Knight'
-					board[7][1].occupant.nil? ? board[7][1].occupant = piece : board[7][6].occupant = piece
+					get_cell(7,1).nil? ? set_cell(7,1,piece) : set_cell(7,6,piece)
 				when 'Bishop'
-					board[7][2].occupant.nil? ? board[7][2].occupant = piece : board[7][5].occupant = piece
+					get_cell(7,2).nil? ? set_cell(7,2,piece) : set_cell(7,5,piece)
 				when 'Rook'
-					board[7][0].occupant.nil? ? board[7][0].occupant = piece : board[7][7].occupant = piece
+					get_cell(7,0).nil? ? set_cell(7,0,piece) : set_cell(7,7,piece)
 				when 'Queen'
-					board[7][4].occupant = piece
+					set_cell(7,4,piece)
 				when 'King'
-					board[7][3].occupant = piece
+					set_cell(7,3,piece)
 				end
 			end
 		end
 
-		return board
 	end
 
 	def create_pieces
