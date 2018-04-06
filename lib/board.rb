@@ -34,6 +34,15 @@ require './lib/piece.rb'
 		end
 	end
 
+	def make_move(input)
+		result = convert_input(input)
+		origin = result[0]
+		destination = result[1]
+		return move_piece(origin, destination)
+	end
+
+	private
+
 	def convert_input(input)
 		#Take one from the numbers to match the boards coordinate system
 		input = input.chars.map{|c| if /\A[-+]?\d+\z/ === c then c = (c.to_i - 1).to_s else c end }.join
@@ -62,8 +71,6 @@ require './lib/piece.rb'
 		
 	end
 
-	private
-
 	def validate_move(origin, destination)
 		piece = get_cell_occupant(origin.x, origin.y)
 		occupied = get_cell_occupant(destination.x, destination.y)
@@ -77,7 +84,7 @@ require './lib/piece.rb'
 
 	#Good grief this method is a mess
 	def draw()
-		#system 'cls'
+		system 'cls'
 		puts "\n\n"
 		alternate = true
 		@cells.reverse.each do |row|
@@ -118,7 +125,7 @@ require './lib/piece.rb'
 			alternate ^= true
 		end
 		puts "\n"
-		print " " * (size * 0.7)
+		print (" " * (size/2 + 1))
 		('a'..'h').each do |l|
 			print (" " * (size-1)) + l
 		end
