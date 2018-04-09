@@ -14,7 +14,7 @@ require './lib/board.rb'
 			puts "\n\nPlayer one (White) make your move. EG. D2D3 to move your Pawn from D2 to D3\n"
 			loop do
 				result = gets.chomp.upcase
-				if result =~ /^[a-hA-H][1-8][a-hA-H][1-8]$/ && @board.make_move(result)
+				if result =~ /^[a-hA-H][1-8][a-hA-H][1-8]$/ && @board.player_move(result)
 					break					
 				else
 					puts "\nInvalid move! Try again...\n"

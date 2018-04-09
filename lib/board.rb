@@ -36,7 +36,7 @@ require './lib/piece.rb'
 	end
 
 	#Accepts a move in the form of a string specifiying the piece to move and where to attempt to move it E.G. "A2A3"
-	def make_move(input)
+	def player_move(input)
 		result = convert_input(input)
 		origin = result[0]
 		destination = result[1]
@@ -82,71 +82,51 @@ require './lib/piece.rb'
 		piece = get_cell_occupant(origin.x, origin.y)
 		occupied = get_cell_occupant(destination.x, destination.y)
 
+		#If an empty space on the board was specified as the origin
+		if piece.nil? then return false end
+
+		#If the set of possible moves for the piece does not contain the destination
+		if !piece.get_moves(origin.x, origin.y).include?([destination.x,destination.y]) then return false end
+
+		#If the piece is a pawn attempting to move diagonally into an empty space
+		if piece.is_a?(Pawn) && origin.y != destination.y && occupied.nil? then 
+			return false
+		end
+
+		#If the piece has unlimited movement check to ensure there are no pieces between origin and destination
+		if piece.unlimited_movement? then
+			if destination.x - origin.x == 0 then
+				difference_x = 0
+			elsif destination.x - origin.x > 0 then
+				difference_x = 1
+			else
+				difference_x = -1
+			end
+			if destination.y - origin.y == 0 then
+				difference_y = 0
+			elsif destination.y - origin.y > 0 then
+				difference_y = 1
+			else
+				difference_y = -1
+			end
+			temp_x = origin.x
+			temp_y = origin.y
+			until temp_x == destination.x && temp_y == destination.y
+				temp_x += difference_x
+				temp_y += difference_y
+				if !get_cell_occupant(temp_x, temp_y).nil? && (temp_x != destination.x || temp_y != destination.y)
+					return false
+				end
+			end
+		end
+
+		#Check if the destination is occupied by a friendly piece
 		if !occupied.nil? then
 			return !(occupied.side === piece.side)
 		end
 
 		return !piece.nil? && (!occupied || occupied.nil?)
 	end
-
-	#Good grief this method is a mess
-	def draw()
-		system 'cls'
-		puts "\n\n"
-		alternate = true
-		@cells.reverse.each do |row|
-			print " " * size
-			if(alternate)
-				@cells.length.times do |i| print i%2 == 0 ? (" " * size).colorize(:background => :white) : (" " * size).colorize(:background => :red) end
-			else
-				@cells.length.times do |i| print i%2 == 0 ? (" " * size).colorize(:background => :red) : (" " * size).colorize(:background => :white) end
-			end
-
-			row.each do |cell|
-
-				if cell.y == 0 then print "\n" + (" " * (size/2)) + (row[0].x + 1).to_s + (" " * (size/2)) end
-
-				if(alternate)
-					if cell.occupant.nil? then
-						print cell.y%2 == 0 ? (" " * size).colorize(:background => :white) : (" " * size).colorize(:background => :red)
-					else
-						print cell.y%2 == 0 ? ((" " * (size/2))+cell.occupant.unicode+(" " * (size/2))).colorize(:color => :black, :background => :white) : ((" " * (size/2))+cell.occupant.unicode+(" " * (size/2))).colorize(:color => :black, :background => :red)
-					end
-				else
-					if cell.occupant.nil? then
-						print cell.y%2 == 0 ? (" " * size).colorize(:background => :red) : (" " * size).colorize(:background => :white)
-					else
-						print cell.y%2 == 0 ? ((" " * (size/2))+cell.occupant.unicode+(" " * (size/2))).colorize(:color => :black, :background => :red) : ((" " * (size/2))+cell.occupant.unicode+(" " * (size/2))).colorize(:color => :black, :background => :white)
-					end
-				end
-
-			end
-			puts
-			print (" " * size)
-			if(alternate)
-				@cells.length.times do |i| print i%2 == 0 ? (" " * size).colorize(:background => :white) : (" " * size).colorize(:background => :red) end
-			else
-				@cells.length.times do |i| print i%2 == 0 ? (" " * size).colorize(:background => :red) : (" " * size).colorize(:background => :white) end
-			end
-			puts
-			alternate ^= true
-		end
-
-		#print column labels
-		puts "\n"
-		print (" " * (size/2 + 1))
-		('a'..'h').each do |l|
-			print (" " * (size-1)) + l
-		end
-
-		#print captured pieces
-		if !@captured.empty? then
-			print "\n\nCaptured pieces: "
-			@captured.each do |piece|
-				print (piece.unicode).colorize(:color => :black, :background => :white)
-			end
-		end
- 	end
 
 	def create_board
 		board = []
@@ -226,5 +206,64 @@ require './lib/piece.rb'
 		pieces << King.new("White") << King.new("Black")
 		return pieces
 	end
+
+	#Good grief this method is a mess
+	def draw()
+		system 'cls'
+		puts "\n\n"
+		alternate = true
+		@cells.reverse.each do |row|
+			print " " * size
+			if(alternate)
+				@cells.length.times do |i| print i%2 == 0 ? (" " * size).colorize(:background => :white) : (" " * size).colorize(:background => :red) end
+			else
+				@cells.length.times do |i| print i%2 == 0 ? (" " * size).colorize(:background => :red) : (" " * size).colorize(:background => :white) end
+			end
+
+			row.each do |cell|
+
+				if cell.y == 0 then print "\n" + (" " * (size/2)) + (row[0].x + 1).to_s + (" " * (size/2)) end
+
+				if(alternate)
+					if cell.occupant.nil? then
+						print cell.y%2 == 0 ? (" " * size).colorize(:background => :white) : (" " * size).colorize(:background => :red)
+					else
+						print cell.y%2 == 0 ? ((" " * (size/2))+cell.occupant.unicode+(" " * (size/2))).colorize(:color => :black, :background => :white) : ((" " * (size/2))+cell.occupant.unicode+(" " * (size/2))).colorize(:color => :black, :background => :red)
+					end
+				else
+					if cell.occupant.nil? then
+						print cell.y%2 == 0 ? (" " * size).colorize(:background => :red) : (" " * size).colorize(:background => :white)
+					else
+						print cell.y%2 == 0 ? ((" " * (size/2))+cell.occupant.unicode+(" " * (size/2))).colorize(:color => :black, :background => :red) : ((" " * (size/2))+cell.occupant.unicode+(" " * (size/2))).colorize(:color => :black, :background => :white)
+					end
+				end
+
+			end
+			puts
+			print (" " * size)
+			if(alternate)
+				@cells.length.times do |i| print i%2 == 0 ? (" " * size).colorize(:background => :white) : (" " * size).colorize(:background => :red) end
+			else
+				@cells.length.times do |i| print i%2 == 0 ? (" " * size).colorize(:background => :red) : (" " * size).colorize(:background => :white) end
+			end
+			puts
+			alternate ^= true
+		end
+
+		#print column labels
+		puts "\n"
+		print (" " * (size/2 + 1))
+		('a'..'h').each do |l|
+			print (" " * (size-1)) + l
+		end
+
+		#print captured pieces
+		if !@captured.empty? then
+			print "\n\nCaptured pieces: "
+			@captured.each do |piece|
+				print (piece.unicode).colorize(:color => :black, :background => :white)
+			end
+		end
+ 	end
 
 end
