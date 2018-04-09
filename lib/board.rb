@@ -1,7 +1,7 @@
 class Board
 require 'colorize'
 require './lib/piece.rb'
-	attr_accessor :cells, :size, :pieces
+	attr_accessor :cells, :size, :pieces, :captured
 
 	class Cell
 		attr_accessor :x, :y, :occupant
@@ -15,6 +15,7 @@ require './lib/piece.rb'
 		@size = 7
 		@pieces = create_pieces
 		@cells = create_board
+		@captured = []
 		place_pieces
 		draw
 	end
@@ -34,6 +35,7 @@ require './lib/piece.rb'
 		end
 	end
 
+	#Accepts a move in the form of a string specifiying the piece to move and where to attempt to move it E.G. "A2A3"
 	def make_move(input)
 		result = convert_input(input)
 		origin = result[0]
@@ -61,6 +63,11 @@ require './lib/piece.rb'
 	def move_piece(origin, destination)
 
 		if validate_move(origin, destination) then
+			#If the move involves capturing a piece
+			if !get_cell_occupant(destination.x, destination.y).nil? then
+				@captured << get_cell_occupant(destination.x, destination.y)
+				set_cell(destination.x, destination.y, nil)
+			end
 			set_cell(destination.x, destination.y, get_cell_occupant(origin.x, origin.y))
 			set_cell(origin.x, origin.y, nil)
 			draw
@@ -124,12 +131,22 @@ require './lib/piece.rb'
 			puts
 			alternate ^= true
 		end
+
+		#print column labels
 		puts "\n"
 		print (" " * (size/2 + 1))
 		('a'..'h').each do |l|
 			print (" " * (size-1)) + l
 		end
-	end
+
+		#print captured pieces
+		if !@captured.empty? then
+			print "\n\nCaptured pieces: "
+			@captured.each do |piece|
+				print (piece.unicode).colorize(:color => :black, :background => :white)
+			end
+		end
+ 	end
 
 	def create_board
 		board = []
