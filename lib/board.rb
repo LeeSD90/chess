@@ -35,12 +35,18 @@ require './lib/piece.rb'
 		end
 	end
 
-	#Accepts a move in the form of a string specifiying the piece to move and where to attempt to move it E.G. "A2A3"
-	def player_move(input)
+	#Accepts a move in the form of a string specifiying the piece to move and where to attempt to move it E.G. "A2A3" along with the color whose turn it is
+	def player_move(input, player)
 		result = convert_input(input)
 		origin = result[0]
 		destination = result[1]
-		return move_piece(origin, destination)
+		piece = get_cell_occupant(origin.x,origin.y)
+
+		if !piece.nil? && !(piece.side == player) then 
+			return false
+		else 
+			return move_piece(origin, destination)
+		end
 	end
 
 	private

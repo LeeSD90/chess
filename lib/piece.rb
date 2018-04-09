@@ -9,6 +9,7 @@ class Piece
 		return false
 	end
 
+	#Given a position, returns the set of possible moves a piece can make
 	def get_moves(x,y)
 		result = []
 		@moveset.each do |move|
