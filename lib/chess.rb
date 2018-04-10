@@ -4,7 +4,7 @@ require './lib/board.rb'
 
 	def initialize
 		@board = Board.new
-		play
+		#play
 	end
 
 	def play

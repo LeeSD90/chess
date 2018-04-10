@@ -1,0 +1,675 @@
+---
+- - - !ruby/object:Board::Cell
+      x: 0
+      y: 0
+      occupant: &21 !ruby/object:Rook
+        side: White
+        type: Rook
+        unicode: "♖"
+        moveset:
+        - - 0
+          - 1
+        - - 1
+          - 0
+        - - 0
+          - -1
+        - - -1
+          - 0
+    - !ruby/object:Board::Cell
+      x: 0
+      y: 1
+      occupant: &20 !ruby/object:Knight
+        side: White
+        type: Knight
+        unicode: "♘"
+        moveset:
+        - - 1
+          - 2
+        - - -1
+          - 2
+        - - 1
+          - -2
+        - - -1
+          - -2
+        - - 2
+          - 1
+        - - 2
+          - -1
+        - - -2
+          - 1
+        - - -2
+          - -1
+    - !ruby/object:Board::Cell
+      x: 0
+      y: 2
+      occupant: &22 !ruby/object:Bishop
+        side: White
+        type: Bishop
+        unicode: "♗"
+        moveset:
+        - - 1
+          - 1
+        - - -1
+          - -1
+        - - 1
+          - -1
+        - - -1
+          - 1
+    - !ruby/object:Board::Cell
+      x: 0
+      y: 3
+      occupant: &31 !ruby/object:King
+        side: White
+        type: King
+        unicode: "♔"
+        moveset:
+        - - 0
+          - 1
+        - - 1
+          - 0
+        - - 0
+          - -1
+        - - -1
+          - 0
+        - - 1
+          - 1
+        - - -1
+          - -1
+        - - 1
+          - -1
+        - - -1
+          - 1
+    - !ruby/object:Board::Cell
+      x: 0
+      y: 4
+      occupant: &29 !ruby/object:Queen
+        side: White
+        type: Queen
+        unicode: "♕"
+        moveset:
+        - - 0
+          - 1
+        - - 1
+          - 0
+        - - 0
+          - -1
+        - - -1
+          - 0
+        - - 1
+          - 1
+        - - -1
+          - -1
+        - - 1
+          - -1
+        - - -1
+          - 1
+    - !ruby/object:Board::Cell
+      x: 0
+      y: 5
+      occupant: &28 !ruby/object:Bishop
+        side: White
+        type: Bishop
+        unicode: "♗"
+        moveset:
+        - - 1
+          - 1
+        - - -1
+          - -1
+        - - 1
+          - -1
+        - - -1
+          - 1
+    - !ruby/object:Board::Cell
+      x: 0
+      y: 6
+      occupant: &26 !ruby/object:Knight
+        side: White
+        type: Knight
+        unicode: "♘"
+        moveset:
+        - - 1
+          - 2
+        - - -1
+          - 2
+        - - 1
+          - -2
+        - - -1
+          - -2
+        - - 2
+          - 1
+        - - 2
+          - -1
+        - - -2
+          - 1
+        - - -2
+          - -1
+    - !ruby/object:Board::Cell
+      x: 0
+      y: 7
+      occupant: &27 !ruby/object:Rook
+        side: White
+        type: Rook
+        unicode: "♖"
+        moveset:
+        - - 0
+          - 1
+        - - 1
+          - 0
+        - - 0
+          - -1
+        - - -1
+          - 0
+  - - !ruby/object:Board::Cell
+      x: 1
+      y: 0
+      occupant: &2 !ruby/object:Pawn
+        side: White
+        type: Pawn
+        unicode: "♙"
+        moveset:
+        - - 1
+          - 0
+        - - 1
+          - 1
+        - - 1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 1
+      y: 1
+      occupant: &4 !ruby/object:Pawn
+        side: White
+        type: Pawn
+        unicode: "♙"
+        moveset:
+        - - 1
+          - 0
+        - - 1
+          - 1
+        - - 1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 1
+      y: 2
+      occupant: &6 !ruby/object:Pawn
+        side: White
+        type: Pawn
+        unicode: "♙"
+        moveset:
+        - - 1
+          - 0
+        - - 1
+          - 1
+        - - 1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 1
+      y: 3
+      occupant: &8 !ruby/object:Pawn
+        side: White
+        type: Pawn
+        unicode: "♙"
+        moveset:
+        - - 1
+          - 0
+        - - 1
+          - 1
+        - - 1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 1
+      y: 4
+      occupant: &10 !ruby/object:Pawn
+        side: White
+        type: Pawn
+        unicode: "♙"
+        moveset:
+        - - 1
+          - 0
+        - - 1
+          - 1
+        - - 1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 1
+      y: 5
+      occupant: &12 !ruby/object:Pawn
+        side: White
+        type: Pawn
+        unicode: "♙"
+        moveset:
+        - - 1
+          - 0
+        - - 1
+          - 1
+        - - 1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 1
+      y: 6
+      occupant: &14 !ruby/object:Pawn
+        side: White
+        type: Pawn
+        unicode: "♙"
+        moveset:
+        - - 1
+          - 0
+        - - 1
+          - 1
+        - - 1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 1
+      y: 7
+      occupant: &16 !ruby/object:Pawn
+        side: White
+        type: Pawn
+        unicode: "♙"
+        moveset:
+        - - 1
+          - 0
+        - - 1
+          - 1
+        - - 1
+          - -1
+  - - !ruby/object:Board::Cell
+      x: 2
+      y: 0
+    - !ruby/object:Board::Cell
+      x: 2
+      y: 1
+    - !ruby/object:Board::Cell
+      x: 2
+      y: 2
+    - !ruby/object:Board::Cell
+      x: 2
+      y: 3
+    - !ruby/object:Board::Cell
+      x: 2
+      y: 4
+    - !ruby/object:Board::Cell
+      x: 2
+      y: 5
+    - !ruby/object:Board::Cell
+      x: 2
+      y: 6
+    - !ruby/object:Board::Cell
+      x: 2
+      y: 7
+  - - !ruby/object:Board::Cell
+      x: 3
+      y: 0
+    - !ruby/object:Board::Cell
+      x: 3
+      y: 1
+    - !ruby/object:Board::Cell
+      x: 3
+      y: 2
+    - !ruby/object:Board::Cell
+      x: 3
+      y: 3
+    - !ruby/object:Board::Cell
+      x: 3
+      y: 4
+    - !ruby/object:Board::Cell
+      x: 3
+      y: 5
+    - !ruby/object:Board::Cell
+      x: 3
+      y: 6
+    - !ruby/object:Board::Cell
+      x: 3
+      y: 7
+  - - !ruby/object:Board::Cell
+      x: 4
+      y: 0
+    - !ruby/object:Board::Cell
+      x: 4
+      y: 1
+    - !ruby/object:Board::Cell
+      x: 4
+      y: 2
+    - !ruby/object:Board::Cell
+      x: 4
+      y: 3
+    - !ruby/object:Board::Cell
+      x: 4
+      y: 4
+    - !ruby/object:Board::Cell
+      x: 4
+      y: 5
+    - !ruby/object:Board::Cell
+      x: 4
+      y: 6
+    - !ruby/object:Board::Cell
+      x: 4
+      y: 7
+  - - !ruby/object:Board::Cell
+      x: 5
+      y: 0
+    - !ruby/object:Board::Cell
+      x: 5
+      y: 1
+    - !ruby/object:Board::Cell
+      x: 5
+      y: 2
+    - !ruby/object:Board::Cell
+      x: 5
+      y: 3
+    - !ruby/object:Board::Cell
+      x: 5
+      y: 4
+    - !ruby/object:Board::Cell
+      x: 5
+      y: 5
+    - !ruby/object:Board::Cell
+      x: 5
+      y: 6
+    - !ruby/object:Board::Cell
+      x: 5
+      y: 7
+  - - !ruby/object:Board::Cell
+      x: 6
+      y: 0
+      occupant: &1 !ruby/object:Pawn
+        side: Black
+        type: Pawn
+        unicode: "♟"
+        moveset:
+        - - -1
+          - 1
+        - - -1
+          - 0
+        - - -1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 6
+      y: 1
+      occupant: &3 !ruby/object:Pawn
+        side: Black
+        type: Pawn
+        unicode: "♟"
+        moveset:
+        - - -1
+          - 1
+        - - -1
+          - 0
+        - - -1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 6
+      y: 2
+      occupant: &5 !ruby/object:Pawn
+        side: Black
+        type: Pawn
+        unicode: "♟"
+        moveset:
+        - - -1
+          - 1
+        - - -1
+          - 0
+        - - -1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 6
+      y: 3
+      occupant: &7 !ruby/object:Pawn
+        side: Black
+        type: Pawn
+        unicode: "♟"
+        moveset:
+        - - -1
+          - 1
+        - - -1
+          - 0
+        - - -1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 6
+      y: 4
+      occupant: &9 !ruby/object:Pawn
+        side: Black
+        type: Pawn
+        unicode: "♟"
+        moveset:
+        - - -1
+          - 1
+        - - -1
+          - 0
+        - - -1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 6
+      y: 5
+      occupant: &11 !ruby/object:Pawn
+        side: Black
+        type: Pawn
+        unicode: "♟"
+        moveset:
+        - - -1
+          - 1
+        - - -1
+          - 0
+        - - -1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 6
+      y: 6
+      occupant: &13 !ruby/object:Pawn
+        side: Black
+        type: Pawn
+        unicode: "♟"
+        moveset:
+        - - -1
+          - 1
+        - - -1
+          - 0
+        - - -1
+          - -1
+    - !ruby/object:Board::Cell
+      x: 6
+      y: 7
+      occupant: &15 !ruby/object:Pawn
+        side: Black
+        type: Pawn
+        unicode: "♟"
+        moveset:
+        - - -1
+          - 1
+        - - -1
+          - 0
+        - - -1
+          - -1
+  - - !ruby/object:Board::Cell
+      x: 7
+      y: 0
+      occupant: &18 !ruby/object:Rook
+        side: Black
+        type: Rook
+        unicode: "♜"
+        moveset:
+        - - 0
+          - 1
+        - - 1
+          - 0
+        - - 0
+          - -1
+        - - -1
+          - 0
+    - !ruby/object:Board::Cell
+      x: 7
+      y: 1
+      occupant: &17 !ruby/object:Knight
+        side: Black
+        type: Knight
+        unicode: "♞"
+        moveset:
+        - - 1
+          - 2
+        - - -1
+          - 2
+        - - 1
+          - -2
+        - - -1
+          - -2
+        - - 2
+          - 1
+        - - 2
+          - -1
+        - - -2
+          - 1
+        - - -2
+          - -1
+    - !ruby/object:Board::Cell
+      x: 7
+      y: 2
+      occupant: &19 !ruby/object:Bishop
+        side: Black
+        type: Bishop
+        unicode: "♝"
+        moveset:
+        - - 1
+          - 1
+        - - -1
+          - -1
+        - - 1
+          - -1
+        - - -1
+          - 1
+    - !ruby/object:Board::Cell
+      x: 7
+      y: 3
+      occupant: &32 !ruby/object:King
+        side: Black
+        type: King
+        unicode: "♚"
+        moveset:
+        - - 0
+          - 1
+        - - 1
+          - 0
+        - - 0
+          - -1
+        - - -1
+          - 0
+        - - 1
+          - 1
+        - - -1
+          - -1
+        - - 1
+          - -1
+        - - -1
+          - 1
+    - !ruby/object:Board::Cell
+      x: 7
+      y: 4
+      occupant: &30 !ruby/object:Queen
+        side: Black
+        type: Queen
+        unicode: "♛"
+        moveset:
+        - - 0
+          - 1
+        - - 1
+          - 0
+        - - 0
+          - -1
+        - - -1
+          - 0
+        - - 1
+          - 1
+        - - -1
+          - -1
+        - - 1
+          - -1
+        - - -1
+          - 1
+    - !ruby/object:Board::Cell
+      x: 7
+      y: 5
+      occupant: &25 !ruby/object:Bishop
+        side: Black
+        type: Bishop
+        unicode: "♝"
+        moveset:
+        - - 1
+          - 1
+        - - -1
+          - -1
+        - - 1
+          - -1
+        - - -1
+          - 1
+    - !ruby/object:Board::Cell
+      x: 7
+      y: 6
+      occupant: &23 !ruby/object:Knight
+        side: Black
+        type: Knight
+        unicode: "♞"
+        moveset:
+        - - 1
+          - 2
+        - - -1
+          - 2
+        - - 1
+          - -2
+        - - -1
+          - -2
+        - - 2
+          - 1
+        - - 2
+          - -1
+        - - -2
+          - 1
+        - - -2
+          - -1
+    - !ruby/object:Board::Cell
+      x: 7
+      y: 7
+      occupant: &24 !ruby/object:Rook
+        side: Black
+        type: Rook
+        unicode: "♜"
+        moveset:
+        - - 0
+          - 1
+        - - 1
+          - 0
+        - - 0
+          - -1
+        - - -1
+          - 0
+- 7
+- - *1
+  - *2
+  - *3
+  - *4
+  - *5
+  - *6
+  - *7
+  - *8
+  - *9
+  - *10
+  - *11
+  - *12
+  - *13
+  - *14
+  - *15
+  - *16
+  - *17
+  - *18
+  - *19
+  - *20
+  - *21
+  - *22
+  - *23
+  - *24
+  - *25
+  - *26
+  - *27
+  - *28
+  - *29
+  - *30
+  - *31
+  - *32
+- []

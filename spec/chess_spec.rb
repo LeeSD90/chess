@@ -23,32 +23,13 @@ describe Chess do
 
 		end
 
-		describe '#set_cell' do
+		describe '#player_move' do
 
-			context "given a valid cell coordinate and value" do
-				it "sets the cell occupant to the given object and returns true" do
-					piece = Pawn.new("White")
-					expect(subject.set_cell(1,2, piece)).to eql true
-					expect(subject.get_cell_occupant(1,2)).to eql piece
-				end
-			end
-
-			context "given an out of bounds cell coordinate" do
-				it "returns false" do
-					piece = Pawn.new("White")
-					expect(subject.set_cell(-4, 3, piece)).to eql false
-				end
-			end
-
-		end
-
-		describe '#make_move' do
-
-			context "Given a valid move as input" do
+			context "Given a valid move as input and a string identifying the side" do
 				it "moves the piece to the specified destination and returns true" do
 					piece = Pawn.new("White")
 					expect(subject.set_cell(1,2, piece)).to eql true
-					expect(subject.make_move("C2C3")).to eql true
+					expect(subject.player_move("C2C3", "White")).to eql true
 					expect(subject.get_cell_occupant(2,2)).to eql piece
 				end
 			end
@@ -57,8 +38,16 @@ describe Chess do
 				it "returns false" do
 					piece = Pawn.new("White")
 					expect(subject.set_cell(1, 2, piece)).to eql true
-					expect(subject.move_piece("Z1B2")).to eql false
+					expect(subject.player_move("Z1B2", "White")).to eql false
 				end
+			end
+
+		end
+
+		describe '#save_game' do
+
+			it "Saves the current board state to the save file and returns true" do
+				expect(subject.save_game).to eql true
 			end
 
 		end

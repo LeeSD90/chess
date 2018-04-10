@@ -1,5 +1,7 @@
 class Board
 require 'colorize'
+require 'yaml'
+require 'fileutils'
 require './lib/piece.rb'
 	attr_accessor :cells, :size, :pieces, :captured
 
@@ -18,6 +20,20 @@ require './lib/piece.rb'
 		@captured = []
 		place_pieces
 		draw
+	end
+
+	def save_game()
+		begin
+			FileUtils.mkdir_p './save/'
+			game = [@cells, @size, @pieces, @captured]
+			File.open('./save/save_game.yaml', "w") {|f| f.write(game.to_yaml)}
+			puts "\nGame saved!\n"
+			return true
+		rescue
+			puts "\nError!\n"
+			raise
+			return false
+		end
 	end
 
 	def get_cell_occupant(x,y)
@@ -66,6 +82,7 @@ require './lib/piece.rb'
 		return origin, destination
 	end
 
+	#Attempts to move a piece from the specified origin to specified destination, returns true if successful false otherwise
 	def move_piece(origin, destination)
 
 		if validate_move(origin, destination) then
@@ -84,6 +101,7 @@ require './lib/piece.rb'
 		
 	end
 
+	#Returns true if a move is valid, false if it is not
 	def validate_move(origin, destination)
 		piece = get_cell_occupant(origin.x, origin.y)
 		occupied = get_cell_occupant(destination.x, destination.y)
