@@ -4,7 +4,27 @@ require './lib/board.rb'
 
 	def initialize
 		@board = Board.new
-		#play
+		menu
+	end
+
+	def menu
+		puts "\nSelect an option\n\n"
+		puts "1. New Game"
+		puts "2. Load Game"
+		puts "3. Exit"
+		loop do
+
+			input = gets.chomp
+			case input
+			when '1'
+				play
+			when '2'
+				@board.load_game
+				play
+			when '3'
+				exit
+			end
+		end
 	end
 
 	def play
