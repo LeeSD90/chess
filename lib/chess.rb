@@ -4,7 +4,7 @@ require './lib/board.rb'
 
 	def initialize
 		@board = Board.new
-		#menu
+		menu
 	end
 
 	def menu

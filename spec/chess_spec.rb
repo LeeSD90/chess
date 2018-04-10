@@ -79,6 +79,33 @@ describe Chess do
 
 		end
 
+		describe '#checkmate?' do
+
+			it "Given a side whose king is not currently in checkmate returns false" do
+				subject.player_move("E2E3", "White")
+				subject.player_move("E3E4", "White")
+				subject.player_move("E4E5", "White")
+				subject.player_move("D1E2", "White")
+				subject.player_move("E2E3", "White")
+				subject.player_move("G7G6", "Black")
+				subject.player_move("F8H6", "Black")
+				expect(subject.checkmate?("White")).to eql false
+				expect(subject.checkmate?("Black")).to eql false
+			end
+
+			it "Given a side whose king is currently in checkmate returns true" do
+				subject.player_move("E2E3", "White")
+				subject.player_move("E3E4", "White")
+
+				subject.player_move("D7D6", "Black")
+				subject.player_move("G7G6", "Black")
+				subject.player_move("F8H6", "Black")
+				subject.player_move("C8G4", "Black")
+				expect(subject.checkmate?("White")).to eql true
+			end
+
+		end
+
 	end
 
 end
