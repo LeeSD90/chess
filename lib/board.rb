@@ -105,12 +105,10 @@ require './lib/piece.rb'
 				piece = get_cell_occupant(cell.x, cell.y)
 				if !piece.nil? && piece.side == color then
 					moves = piece.get_moves(cell.x,cell.y)
-
 					moves.each do |move|
 						if move == king_position then
 							print "\nvalidating " + cell.x.to_s + "," + cell.y.to_s + " to king at " + king_position.to_s
 							if validate_move(cell, get_cell(king_position[0],king_position[1]))
-								print "wewlad"
 								check_moves << move
 							else true
 							end
@@ -123,30 +121,6 @@ require './lib/piece.rb'
 
 		return check_moves.any?
 
-
-=begin		
-		moves = @pieces.map {|piece| 
-			move_set = []
-			if piece.side == color then
-				position = @cells.flatten.select{|cell| cell.occupant === piece }[0]
-				move_set = get_cell_occupant(position.x, position.y).get_moves(position.x, position.y)
-				move_set.each {|move| 
-					if move[0] == king_position[0] && move[1] == king_position[1] then
-						if validate_move(Cell.new(position.x.to_i, position.y.to_i), Cell.new(king_position[0].to_i, king_position[1].to_i)) then
-							[position.x.to_i, position.y.to_i]
-						end
-					end }
-			end
-		}
-		print moves
-		check_moves = moves.flatten(1).select{|position| king_position == position }
-		print check_moves
-
-		check_moves.delete_if do |move|
-			false
-		end
-		return check_moves.any?
-=end
 	end
 
 	private
@@ -171,17 +145,27 @@ require './lib/piece.rb'
 
 	#Attempts to move a piece from the specified origin to specified destination, returns true if successful false otherwise
 	def move_piece(origin, destination)
-
+		piece = get_cell_occupant(origin.x, origin.y)
+		destination_piece = get_cell_occupant(destination.x, destination.y)
 		if validate_move(origin, destination) then
 			#If the move involves capturing a piece
-			if !get_cell_occupant(destination.x, destination.y).nil? then
-				@captured << get_cell_occupant(destination.x, destination.y)
+			if !destination_piece.nil? then
+				@captured << destination_piece
 				set_cell(destination.x, destination.y, nil)
 			end
-			set_cell(destination.x, destination.y, get_cell_occupant(origin.x, origin.y))
+
+			set_cell(destination.x, destination.y, piece)
 			set_cell(origin.x, origin.y, nil)
-			draw
-			return true
+
+			if check?(piece.side)
+				puts "This move puts you in check!"
+				set_cell(origin.x, origin.y, piece)
+				destination_piece.nil? set_cell(destination.x, destination.y, nil) : set_cell(destination.x, destination.y, destination_piece)
+				return false
+			else
+				draw
+				return true
+			end
 		else
 			return false
 		end
@@ -237,9 +221,6 @@ require './lib/piece.rb'
 		if !occupied.nil? && (occupied.side === piece.side) then
 			puts "The destination is occupied by a friendly piece!"; return false 
 		end
-
-		#If the move would put the player in check
-		#if check?(piece.side) then puts "That move would put you in check!"; return false end
 
 		return !piece.nil?
 	end
