@@ -28,13 +28,18 @@ require './lib/board.rb'
 	end
 
 	def play
+		puts "\nYou can input a move by specifying the cell of the piece you want to move and its destination cell.\n"
+		puts "For example typing b2b3 will move the white pawn from b2 to b3"
 		playing = true
 		player = "White"
 		while(playing)
-			puts "\n\n #{player} make your move. EG. D2D3 to move your Pawn from D2 to D3\n"
+			puts "\n\n #{player} make your move or type save to save the game and exit.\n"
 			loop do
 				result = gets.chomp.upcase
-				if result =~ /^[a-hA-H][1-8][a-hA-H][1-8]$/ && @board.player_move(result, player)
+				if result == 'save'
+					@board.save_game
+					exit
+				elsif result =~ /^[a-hA-H][1-8][a-hA-H][1-8]$/ && @board.player_move(result, player)
 					break					
 				else
 					puts "\nInvalid move! Try again...\n"
