@@ -33,10 +33,10 @@ require './lib/board.rb'
 		playing = true
 		player = "White"
 		while(playing)
-			puts "\n\n #{player} make your move or type save to save the game and exit.\n"
+			puts "\n\n#{player} make your move or type save to save the game and exit.\n"
 			loop do
 				result = gets.chomp.upcase
-				if result == 'save'
+				if result == "SAVE"
 					@board.save_game
 					exit
 				elsif result =~ /^[a-hA-H][1-8][a-hA-H][1-8]$/ && @board.player_move(result, player)

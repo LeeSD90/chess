@@ -43,6 +43,7 @@ require './lib/piece.rb'
 			@size = game[1]
 			@pieces = game[2]
 			@captured = game[3]
+			draw
 			puts "\nGame loaded!\n"
 			return true
 		rescue
