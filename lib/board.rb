@@ -68,6 +68,13 @@ require './lib/piece.rb'
 		end
 	end
 
+	def get_cell(x,y)
+		if in_bounds?(x,y) then
+			return @cells[x][y]
+		else return false
+		end
+	end
+
 	#Accepts a move in the form of a string specifiying the piece to move and where to attempt to move it E.G. "A2A3" along with the color whose turn it is
 	def player_move(input, player)
 		result = convert_input(input)
@@ -82,7 +89,70 @@ require './lib/piece.rb'
 		end
 	end
 
+	def check?(player)
+		king_position = @cells.flatten.select {|cell| !cell.occupant.nil? && cell.occupant.type == "King" && cell.occupant.side == player }
+		king_position = [king_position[0].x.to_i, king_position[0].y.to_i]
+
+		check_moves = []
+		moves = []
+		position = []
+		pieces = nil
+
+		player == "White" ? color = "Black" : color = "White"
+
+		@cells.each do |row|
+			row.each do |cell|
+				piece = get_cell_occupant(cell.x, cell.y)
+				if !piece.nil? && piece.side == color then
+					moves = piece.get_moves(cell.x,cell.y)
+
+					moves.each do |move|
+						if move == king_position then
+							print "\nvalidating " + cell.x.to_s + "," + cell.y.to_s + " to king at " + king_position.to_s
+							if validate_move(cell, get_cell(king_position[0],king_position[1]))
+								print "wewlad"
+								check_moves << move
+							else true
+							end
+						else true
+						end
+					end
+				end
+			end
+		end
+
+		return check_moves.any?
+
+
+=begin		
+		moves = @pieces.map {|piece| 
+			move_set = []
+			if piece.side == color then
+				position = @cells.flatten.select{|cell| cell.occupant === piece }[0]
+				move_set = get_cell_occupant(position.x, position.y).get_moves(position.x, position.y)
+				move_set.each {|move| 
+					if move[0] == king_position[0] && move[1] == king_position[1] then
+						if validate_move(Cell.new(position.x.to_i, position.y.to_i), Cell.new(king_position[0].to_i, king_position[1].to_i)) then
+							[position.x.to_i, position.y.to_i]
+						end
+					end }
+			end
+		}
+		print moves
+		check_moves = moves.flatten(1).select{|position| king_position == position }
+		print check_moves
+
+		check_moves.delete_if do |move|
+			false
+		end
+		return check_moves.any?
+=end
+	end
+
 	private
+
+	def checkmate?()
+	end
 
 	def convert_input(input)
 		#Take one from the numbers to match the boards coordinate system
@@ -124,13 +194,14 @@ require './lib/piece.rb'
 		occupied = get_cell_occupant(destination.x, destination.y)
 
 		#If an empty space on the board was specified as the origin
-		if piece.nil? then return false end
+		if piece.nil? then puts "You specified an empty space!"; return false end
 
 		#If the set of possible moves for the piece does not contain the destination
-		if !piece.get_moves(origin.x, origin.y).include?([destination.x,destination.y]) then return false end
+		if !piece.get_moves(origin.x, origin.y).include?([destination.x,destination.y]) then puts "That move is impossible!"; return false end
 
 		#If the piece is a pawn attempting to move diagonally into an empty space
 		if piece.is_a?(Pawn) && origin.y != destination.y && occupied.nil? then 
+			puts "Pawns can only move diagonally when capturing a piece!"
 			return false
 		end
 
@@ -156,17 +227,21 @@ require './lib/piece.rb'
 				temp_x += difference_x
 				temp_y += difference_y
 				if !get_cell_occupant(temp_x, temp_y).nil? && (temp_x != destination.x || temp_y != destination.y)
+					puts "There is an obstruction!"
 					return false
 				end
 			end
 		end
 
 		#Check if the destination is occupied by a friendly piece
-		if !occupied.nil? then
-			return !(occupied.side === piece.side)
+		if !occupied.nil? && (occupied.side === piece.side) then
+			puts "The destination is occupied by a friendly piece!"; return false 
 		end
 
-		return !piece.nil? && (!occupied || occupied.nil?)
+		#If the move would put the player in check
+		#if check?(piece.side) then puts "That move would put you in check!"; return false end
+
+		return !piece.nil?
 	end
 
 	def create_board

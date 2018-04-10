@@ -47,10 +47,38 @@ describe Chess do
 		describe '#save_game' do
 
 			it "Saves the current board state to the save file and returns true" do
-				expect(subject.save_game).to eql true
+				expect(subject.save_game("White")).to eql true
 			end
 
 		end
+
+		describe '#check?' do
+
+			it "Given a side whose king is not currently in check returns false" do
+				subject = Board.new
+				subject.player_move("E2E3", "White")
+				subject.player_move("E3E4", "White")
+				subject.player_move("E4E5", "White")
+				subject.player_move("D1E2", "White")
+				subject.player_move("E2E3", "White")
+				subject.player_move("B2B3", "White")
+				expect(subject.check?("White")).to eql false
+				expect(subject.check?("Black")).to eql false
+			end
+
+			it "Given a side whose king is currently in check returns true" do
+				subject.player_move("E2E3", "White")
+				subject.player_move("E3E4", "White")
+				subject.player_move("E4E5", "White")
+				subject.player_move("D1E2", "White")
+				subject.player_move("E2E3", "White")
+				subject.player_move("G7G6", "Black")
+				subject.player_move("F8H6", "Black")
+				expect(subject.check?("White")).to eql true
+			end
+
+		end
+
 	end
 
 end
