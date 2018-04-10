@@ -36,6 +36,22 @@ require './lib/piece.rb'
 		end
 	end
 
+	def load_game()
+		begin
+			game = YAML.load_file('./save/save_game.yaml', 'w+')
+			@cells = game[0]
+			@size = game[1]
+			@pieces = game[2]
+			@captured = game[3]
+			puts "\nGame loaded!\n"
+			return true
+		rescue
+			puts "\nError!\n"
+			raise
+			return false
+		end
+	end
+
 	def get_cell_occupant(x,y)
 		if in_bounds?(x,y) then
 			return @cells[x][y].occupant
