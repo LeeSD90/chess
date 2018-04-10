@@ -22,10 +22,10 @@ require './lib/piece.rb'
 		draw
 	end
 
-	def save_game()
+	def save_game(player)
 		begin
 			FileUtils.mkdir_p './save/'
-			game = [@cells, @size, @pieces, @captured]
+			game = [@cells, @size, @pieces, @captured, player]
 			File.open('./save/save_game.yaml', "w") {|f| f.write(game.to_yaml)}
 			puts "\nGame saved!\n"
 			return true
@@ -45,7 +45,7 @@ require './lib/piece.rb'
 			@captured = game[3]
 			draw
 			puts "\nGame loaded!\n"
-			return true
+			return game[4]
 		rescue
 			puts "\nError!\n"
 			raise

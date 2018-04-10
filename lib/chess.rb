@@ -19,25 +19,24 @@ require './lib/board.rb'
 			when '1'
 				play
 			when '2'
-				@board.load_game
-				play
+				player = @board.load_game
+				play(player)
 			when '3'
 				exit
 			end
 		end
 	end
 
-	def play
+	def play(player = "White")
 		puts "\nYou can input a move by specifying the cell of the piece you want to move and its destination cell.\n"
 		puts "For example typing b2b3 will move the white pawn from b2 to b3"
 		playing = true
-		player = "White"
 		while(playing)
 			puts "\n\n#{player} make your move or type save to save the game and exit.\n"
 			loop do
 				result = gets.chomp.upcase
 				if result == "SAVE"
-					@board.save_game
+					@board.save_game(player)
 					exit
 				elsif result =~ /^[a-hA-H][1-8][a-hA-H][1-8]$/ && @board.player_move(result, player)
 					break					
