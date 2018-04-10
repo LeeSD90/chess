@@ -20,6 +20,7 @@ require './lib/piece.rb'
 		@captured = []
 		place_pieces
 		draw
+		checkmate?("White")
 	end
 
 	def save_game(player)
@@ -107,7 +108,6 @@ require './lib/piece.rb'
 					moves = piece.get_moves(cell.x,cell.y)
 					moves.each do |move|
 						if move == king_position then
-							print "\nvalidating " + cell.x.to_s + "," + cell.y.to_s + " to king at " + king_position.to_s
 							if validate_move(cell, get_cell(king_position[0],king_position[1]))
 								check_moves << move
 							else true
@@ -123,10 +123,29 @@ require './lib/piece.rb'
 
 	end
 
-	private
+	def checkmate?(player)
+		king_position = @cells.flatten.select {|cell| !cell.occupant.nil? && cell.occupant.type == "King" && cell.occupant.side == player }
+		king = king_position[0].occupant
+		king_position = [king_position[0].x.to_i, king_position[0].y.to_i]
+		uncheck_moves = []
 
-	def checkmate?()
+		moves = king.get_moves(king_position[0],king_position[1])
+		moves.each do |move|
+			if validate_move(get_cell(king_position[0],king_position[1]),get_cell(move[0],move[1]))
+				temp = get_cell_occupant(move[0], move[1])
+				set_cell(move[0], move[1], king)
+				set_cell(king_position[0],king_position[1], nil)
+				if !(check?(player))
+					uncheck_moves << move
+				end
+				set_cell(king_position[0],king_position[1], king)
+				set_cell(move[0], move[1], temp)
+			end
+		end
+		return check?(player) && !uncheck_moves.any?
 	end
+
+	private
 
 	def convert_input(input)
 		#Take one from the numbers to match the boards coordinate system
@@ -160,7 +179,7 @@ require './lib/piece.rb'
 			if check?(piece.side)
 				puts "This move puts you in check!"
 				set_cell(origin.x, origin.y, piece)
-				destination_piece.nil? set_cell(destination.x, destination.y, nil) : set_cell(destination.x, destination.y, destination_piece)
+				destination_piece.nil? ? set_cell(destination.x, destination.y, nil) : set_cell(destination.x, destination.y, destination_piece)
 				return false
 			else
 				draw
@@ -219,7 +238,7 @@ require './lib/piece.rb'
 
 		#Check if the destination is occupied by a friendly piece
 		if !occupied.nil? && (occupied.side === piece.side) then
-			puts "The destination is occupied by a friendly piece!"; return false 
+			return false 
 		end
 
 		return !piece.nil?
