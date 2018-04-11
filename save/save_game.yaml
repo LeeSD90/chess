@@ -190,17 +190,7 @@
     - !ruby/object:Board::Cell
       x: 1
       y: 2
-      occupant: &6 !ruby/object:Pawn
-        side: White
-        type: Pawn
-        unicode: "♙"
-        moveset:
-        - - 1
-          - 0
-        - - 1
-          - 1
-        - - 1
-          - -1
+      occupant: 
     - !ruby/object:Board::Cell
       x: 1
       y: 3
@@ -280,6 +270,17 @@
     - !ruby/object:Board::Cell
       x: 2
       y: 2
+      occupant: &6 !ruby/object:Pawn
+        side: White
+        type: Pawn
+        unicode: "♙"
+        moveset:
+        - - 1
+          - 0
+        - - 1
+          - 1
+        - - 1
+          - -1
     - !ruby/object:Board::Cell
       x: 2
       y: 3
@@ -673,4 +674,4 @@
   - *31
   - *32
 - []
-- White
+- Black
