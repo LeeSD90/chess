@@ -43,8 +43,10 @@ require './lib/board.rb'
 				else
 					puts "\nInvalid move! Try again...\n"
 				end
+
 			end
 			player == "White" ? player = "Black" : player = "White"
+			if @board.checkmate?(player) then puts "\nCheckmate!";playing = false end
 		end
 
 	end

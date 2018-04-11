@@ -197,14 +197,13 @@ require './lib/piece.rb'
 		occupied = get_cell_occupant(destination.x, destination.y)
 
 		#If an empty space on the board was specified as the origin
-		if piece.nil? then puts "You specified an empty space!"; return false end
+		if piece.nil? then return false end
 
 		#If the set of possible moves for the piece does not contain the destination
-		if !piece.get_moves(origin.x, origin.y).include?([destination.x,destination.y]) then puts "That move is impossible!"; return false end
+		if !piece.get_moves(origin.x, origin.y).include?([destination.x,destination.y]) then return false end
 
 		#If the piece is a pawn attempting to move diagonally into an empty space
 		if piece.is_a?(Pawn) && origin.y != destination.y && occupied.nil? then 
-			puts "Pawns can only move diagonally when capturing a piece!"
 			return false
 		end
 
@@ -230,7 +229,6 @@ require './lib/piece.rb'
 				temp_x += difference_x
 				temp_y += difference_y
 				if !get_cell_occupant(temp_x, temp_y).nil? && (temp_x != destination.x || temp_y != destination.y)
-					puts "There is an obstruction!"
 					return false
 				end
 			end
